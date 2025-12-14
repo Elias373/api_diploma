@@ -2,14 +2,17 @@
 
 > End-to-end automated API testing framework for the [Pet Store demo API](https://petstore.swagger.io)
 
-## 📋 Project Overview 
-Professional API testing framework showcasing modern automation practices:
+## 📋 Project Overview
 
-- **Pydantic schemas** for robust request/response validation
-- **Allure reporting** with detailed API call logging
-- **Endpoint-based architecture** for clean test design
-- **Console logging** with execution metrics and timing
-- **Jenkins-ready** with standardized output formats
+Professional API testing framework with enterprise integrations:
+
+- **Pydantic schemas** - Type-safe request/response validation  
+- **Allure reporting** - Detailed API call logging and visualization
+- **Endpoint architecture** - Clean test design without hardcoded URLs
+- **Telegram notifications** - Real-time alerts for test execution
+- **TestOps integration** - Test management and analytics platform
+- **Jira workflow** - Issues tracking and sprint integration
+- **Jenkins pipeline** - Automated CI/CD execution
 
 ---
 
