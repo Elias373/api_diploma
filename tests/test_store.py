@@ -19,7 +19,7 @@ class TestStoreResource:
             allure.attach(
                 str(order_data),
                 name="Order request data",
-                attachment_type=allure.attachment_type.JSON
+                attachment_type=allure.attachment_type.JSON,
             )
 
         with allure.step("Send POST request to create order"):
@@ -49,7 +49,7 @@ class TestStoreResource:
             allure.attach(
                 f"Created order ID={order_id} for retrieval test",
                 name="Test order info",
-                attachment_type=allure.attachment_type.TEXT
+                attachment_type=allure.attachment_type.TEXT,
             )
 
         with allure.step(f"Send GET request for order ID={order_id}"):

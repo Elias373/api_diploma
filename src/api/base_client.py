@@ -10,10 +10,12 @@ class BaseAPIClient:
     def __init__(self, config: APIConfig):
         self.config = config
         self.session = requests.Session()
-        self.session.headers.update({
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        })
+        self.session.headers.update(
+            {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            }
+        )
 
     def get(self, endpoint: str, **kwargs) -> requests.Response:
         return self._request("GET", endpoint, **kwargs)
@@ -39,17 +41,27 @@ class BaseAPIClient:
 
         return response
 
-    def _log_to_allure(self, method: str, endpoint: str, url: str,
-                       kwargs: dict, response: requests.Response) -> None:
+    def _log_to_allure(
+        self,
+        method: str,
+        endpoint: str,
+        url: str,
+        kwargs: dict,
+        response: requests.Response,
+    ) -> None:
         request_body = kwargs.get("json") or kwargs.get("data")
         allure.attach(
-            json.dumps({
-                "method": method,
-                "endpoint": endpoint,
-                "url": url,
-                "headers": dict(self.session.headers),
-                "body": request_body
-            }, indent=2, ensure_ascii=False),
+            json.dumps(
+                {
+                    "method": method,
+                    "endpoint": endpoint,
+                    "url": url,
+                    "headers": dict(self.session.headers),
+                    "body": request_body,
+                },
+                indent=2,
+                ensure_ascii=False,
+            ),
             name=f"Request: {method} {endpoint}",
             attachment_type=allure.attachment_type.JSON,
         )
@@ -59,4 +71,3 @@ class BaseAPIClient:
             name=f"Response {method} {endpoint}: {response.status_code}",
             attachment_type=allure.attachment_type.TEXT,
         )
-

@@ -35,7 +35,7 @@ def pet_data_template(unique_pet_name: str) -> Dict:
 
 @pytest.fixture
 def created_pet(
-        petstore_client: PetStoreClient, pet_data_template: Dict
+    petstore_client: PetStoreClient, pet_data_template: Dict
 ) -> Generator[Dict, None, None]:
     with allure.step("SETUP: Create pet for testing"):
         response = petstore_client.create_pet(pet_data_template)
@@ -43,7 +43,7 @@ def created_pet(
         allure.attach(
             f"Created pet: ID={response['id']}, Name='{pet_data_template['name']}'",
             name="Test pet info",
-            attachment_type=allure.attachment_type.TEXT
+            attachment_type=allure.attachment_type.TEXT,
         )
 
     yield pet_with_id
@@ -53,13 +53,13 @@ def created_pet(
         allure.attach(
             f"Successfully deleted pet ID={response['id']}",
             name="Cleanup info",
-            attachment_type=allure.attachment_type.TEXT
+            attachment_type=allure.attachment_type.TEXT,
         )
 
 
 @pytest.fixture
 def created_order(
-        petstore_client: PetStoreClient, created_pet: Dict
+    petstore_client: PetStoreClient, created_pet: Dict
 ) -> Generator[Dict, None, None]:
     order_data = {
         "petId": created_pet["id"],
@@ -74,14 +74,14 @@ def created_order(
         allure.attach(
             f"Created order: ID={response['id']}, PetID={created_pet['id']}",
             name="Test order info",
-            attachment_type=allure.attachment_type.TEXT
+            attachment_type=allure.attachment_type.TEXT,
         )
 
     yield order_with_id
 
-    with allure.step("TEARDOWN: Clean up test order"):
-        allure.attach(
-            f"Note: PetStore API doesn't provide DELETE for orders. Order ID={response['id']} remains in system.",
-            name="Cleanup note",
-            attachment_type=allure.attachment_type.TEXT
-        )
+    allure.attach(
+        f"Note: PetStore API doesn't provide DELETE for orders. "
+        f"Order ID={response['id']} remains in system.",
+        name="Cleanup note",
+        attachment_type=allure.attachment_type.TEXT,
+    )

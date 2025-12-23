@@ -9,6 +9,7 @@ class Pet(BaseModel):
     photoUrls: List[str] = Field(default_factory=list)
     status: Optional[str] = Field(None, regex="^(available|pending|sold)$")
 
+    @classmethod
     @validator("photoUrls")
     def validate_photo_urls(cls, v):
         for url in v:
