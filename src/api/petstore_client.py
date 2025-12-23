@@ -4,10 +4,6 @@ from .base_client import BaseAPIClient
 
 
 class PetStoreClient(BaseAPIClient):
-    def find_pets_by_status(self, status: str = "available") -> List[Dict]:
-        response = self.get(f"/pet/findByStatus?status={status}")
-        response.raise_for_status()
-        return response.json()
 
     def get_pet_by_id(self, pet_id: int) -> Dict:
         response = self.get(f"/pet/{pet_id}")

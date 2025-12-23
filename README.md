@@ -1,21 +1,6 @@
 # Pet Store API Test Automation
 
 > End-to-end automated API testing framework for the [Pet Store demo API](https://petstore.swagger.io)
-
-## 📋 Project Overview
-
-Professional API testing framework with enterprise integrations:
-
-- **Pydantic schemas** - Type-safe request/response validation  
-- **Allure reporting** - Detailed API call logging and visualization
-- **Endpoint architecture** - Clean test design without hardcoded URLs
-- **Telegram notifications** - Real-time alerts for test execution
-- **TestOps integration** - Test management and analytics platform
-- **Jira workflow** - Issues tracking and sprint integration
-- **Jenkins pipeline** - Automated CI/CD execution
-
----
-
 ## 🛠 Tech Stack
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white)
@@ -23,6 +8,21 @@ Professional API testing framework with enterprise integrations:
 ![Pydantic](https://img.shields.io/badge/Pydantic-E92063?style=for-the-badge&logo=pydantic&logoColor=white)
 ![Allure](https://img.shields.io/badge/Allure-FF4A36?style=for-the-badge&logo=allure&logoColor=white)
 ![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white)
+
+
+---
+
+## 📋 Project Overview
+
+**Professional API testing framework with enterprise integrations:**
+
+- **Pydantic schemas** - Type-safe request/response validation  
+- **Allure reporting** - Detailed API call logging and visualization
+- **Endpoint architecture** - Clean test design without hardcoded URLs
+- **Telegram notifications** with test completion summaries
+- **TestOps integration** - Test management and analytics platform
+- **Jira workflow** - Issues tracking and sprint integration
+- **Jenkins pipeline** integration for automated test execution and reporting
 
 ---
 
@@ -47,6 +47,15 @@ venv\Scripts\activate
 # 4. Install dependencies
 pip install -r requirements.txt
 ```
+### ⚙️ Configuration
+
+### **Environment Variables**
+Create a `.env` file in the project root directory:
+
+```env
+# API Configuration
+BASE_URL=https://petstore.swagger.io/v2
+```
 
 ### Run Tests
 ```bash
@@ -54,50 +63,46 @@ pip install -r requirements.txt
 pytest --alluredir=allure-results
 
 # Run specific test class
-pytest tests/test_get.py -v
+pytest tests/test_pet_resource.py -v
+pytest tests/test_store_resource.py -v
 
 # View Allure report
 allure serve allure-results
 ```
-
 ---
 
 ## ✅ Test Coverage
 
 ### Overall Statistics
-| Metric | Value |
-|--------|-------|
-| **Total Tests** | 5 |
-| **Pass Rate** | 100% |
+| Metric | Value             |
+|--------|-------------------|
+| **Total Tests** | 5                 |
+| **Pass Rate** | 100%              |
 | **HTTP Methods Covered** | GET, POST, DELETE |
-| **Endpoints Tested** | 4 |
+| **Endpoints Tested** | 4                 |
 
 ### Detailed Test Breakdown
 
-#### **GET Method Tests** (2 tests)
-| Test Case | Status | Endpoint | Assertions |
-|-----------|--------|----------|------------|
-| **Find Available Pets** | ✅ PASS | `GET /pet/findByStatus` | Status 200, list type, schema validation |
-| **Get Pet by ID** | ✅ PASS | `GET /pet/{id}` | Status 200, ID match, name validation, schema |
+#### **Pet Resource Tests** (3 tests)
+| Test Case | Method | Status | Key Validations |
+|-----------|--------|--------|-----------------|
+| **Create Pet** | POST | ✅ PASS | ID present, name match, Pydantic schema |
+| **Get Pet by ID** | GET | ✅ PASS | ID match, data consistency, schema |
+| **Delete Pet** | DELETE | ✅ PASS | Response structure, 404 verification |
 
-#### **POST Method Tests** (2 tests)
-| Test Case | Status | Endpoint | Assertions |
-|-----------|--------|----------|------------|
-| **Create New Pet** | ✅ PASS | `POST /pet` | Status 200, ID present, name match, schema |
-| **Create Order** | ✅ PASS | `POST /store/order` | Status 200, order ID, petId match, schema |
+#### **Store Resource Tests** (2 tests)  
+| Test Case | Method | Status | Key Validations |
+|-----------|--------|--------|-----------------|
+| **Create Order** | POST | ✅ PASS | Order ID, petId match, schema |
+| **Get Order by ID** | GET | ✅ PASS | Order ID match, status validation, schema |
+---
 
-#### **DELETE Method Test** (1 test)
-| Test Case | Status | Endpoint | Assertions |
-|-----------|--------|----------|------------|
-| **Delete Pet** | ✅ PASS | `DELETE /pet/{id}` | Status 200, response structure, deletion verification |
+### [Jenkins](https://jenkins.autotests.cloud/job/api_diploma/) Build
 
+![Jenkins Build](readme_media/jb.png)
 ---
 
 ### 📊 Report Examples
-
-#### [Jenkins](https://jenkins.autotests.cloud/job/api_diploma/) Build
-
-![Jenkins Build](readme_media/jb.png)
 
 #### Allure Overview  
 ![Allure Report](readme_media/ao.png)
