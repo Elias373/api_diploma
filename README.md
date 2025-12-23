@@ -47,7 +47,7 @@ venv\Scripts\activate
 # 4. Install dependencies
 pip install -r requirements.txt
 ```
-### ⚙️ Configuration
+### Configuration
 
 ### **Environment Variables**
 Create a `.env` file in the project root directory:
@@ -79,7 +79,6 @@ allure serve allure-results
 | **Total Tests** | 5                 |
 | **Pass Rate** | 100%              |
 | **HTTP Methods Covered** | GET, POST, DELETE |
-| **Endpoints Tested** | 4                 |
 
 ### Detailed Test Breakdown
 
@@ -98,7 +97,6 @@ allure serve allure-results
 ---
 
 ### [Jenkins](https://jenkins.autotests.cloud/job/api_diploma/) Build
-
 ![Jenkins Build](readme_media/jb.png)
 ---
 
@@ -107,18 +105,18 @@ allure serve allure-results
 #### Allure Overview  
 ![Allure Report](readme_media/ao.png)
 
-#### Test Details with logs
-![Test Details](readme_media/atd.png)
+#### Test Details
+![Test Details](readme_media/td.png)
 
 #### [TestOps](https://allure.autotests.cloud/project/5047/dashboards) Runs
 
-![TestOps Runs](readme_media/to.png)
+![TestOps Runs](readme_media/tor.png)
 
 #### TestOps Test Cases
-![TestOps Test Cases](readme_media/tod.png)
+![TestOps Test Cases](readme_media/tok.png)
 
 #### [Jira](https://jira.autotests.cloud/browse/HOMEWORK-1560) Integration
-![Jira Integration](readme_media/jira.png)
+![Jira Integration](readme_media/ji.png)
 
 
 #### Telegram Notification
