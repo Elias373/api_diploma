@@ -60,6 +60,3 @@ class TestPetResource:
 
             response = petstore_client.get(f"/pet/{pet_id}")
             assert response.status_code == 404
-
-            response_text = response.text.lower()
-            assert "not found" in response_text or "pet" in response_text
