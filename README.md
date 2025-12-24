@@ -54,6 +54,7 @@ Create a `.env` file in the project root directory:
 ```env
 # API Configuration
 BASE_URL=https://petstore.swagger.io/v2
+API_TIMEOUT=30
 ```
 
 ### Run Tests
@@ -62,8 +63,8 @@ BASE_URL=https://petstore.swagger.io/v2
 pytest --alluredir=allure-results
 
 # Run specific test class
-pytest tests/test_pet_resource.py -v
-pytest tests/test_store_resource.py -v
+pytest tests/test_pet.py -v
+pytest tests/test_store.py -v
 
 # View Allure report
 allure serve allure-results
@@ -105,7 +106,7 @@ allure serve allure-results
 ![Allure Report](readme_media/ao.png)
 
 #### Test Details
-![Test Details](readme_media/td.png)
+![Test Details](readme_media/at.png)
 
 #### [TestOps](https://allure.autotests.cloud/project/5047/dashboards) Runs
 
