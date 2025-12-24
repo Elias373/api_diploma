@@ -1,8 +1,6 @@
 import json
-
 import allure
 import requests
-
 from src.config import APIConfig
 
 
@@ -23,22 +21,14 @@ class BaseAPIClient:
     def post(self, endpoint: str, **kwargs) -> requests.Response:
         return self._request("POST", endpoint, **kwargs)
 
-    def put(self, endpoint: str, **kwargs) -> requests.Response:
-        return self._request("PUT", endpoint, **kwargs)
-
     def delete(self, endpoint: str, **kwargs) -> requests.Response:
         return self._request("DELETE", endpoint, **kwargs)
 
     def _request(self, method: str, endpoint: str, **kwargs) -> requests.Response:
         url = f"{self.config.base_url}{endpoint}"
-
-        if "timeout" not in kwargs:
-            kwargs["timeout"] = self.config.timeout
-
+        kwargs.setdefault("timeout", self.config.timeout)
         response = self.session.request(method, url, **kwargs)
-
         self._log_to_allure(method, endpoint, url, kwargs, response)
-
         return response
 
     def _log_to_allure(
@@ -65,7 +55,6 @@ class BaseAPIClient:
             name=f"Request: {method} {endpoint}",
             attachment_type=allure.attachment_type.JSON,
         )
-
         allure.attach(
             response.text,
             name=f"Response {method} {endpoint}: {response.status_code}",

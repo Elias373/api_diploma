@@ -1,9 +1,6 @@
 from datetime import datetime
 from typing import Dict, Generator
-
-import allure
 import pytest
-
 from src.api.petstore_client import PetStoreClient
 from src.config import APIConfig
 
@@ -20,8 +17,7 @@ def petstore_client(api_config: APIConfig) -> PetStoreClient:
 
 @pytest.fixture
 def unique_pet_name() -> str:
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-    return f"TestPet_{timestamp}"
+    return f"TestPet_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}"
 
 
 @pytest.fixture
@@ -37,24 +33,12 @@ def pet_data_template(unique_pet_name: str) -> Dict:
 def created_pet(
     petstore_client: PetStoreClient, pet_data_template: Dict
 ) -> Generator[Dict, None, None]:
-    with allure.step("SETUP: Create pet for testing"):
-        response = petstore_client.create_pet(pet_data_template)
-        pet_with_id = {**pet_data_template, "id": response["id"]}
-        allure.attach(
-            f"Created pet: ID={response['id']}, Name='{pet_data_template['name']}'",
-            name="Test pet info",
-            attachment_type=allure.attachment_type.TEXT,
-        )
-
+    response = petstore_client.post("/pet", json=pet_data_template)
+    assert response.status_code == 200
+    response_data = response.json()
+    pet_with_id = {**pet_data_template, "id": response_data["id"]}
     yield pet_with_id
-
-    with allure.step("TEARDOWN: Clean up test pet"):
-        petstore_client.delete_pet(response["id"])
-        allure.attach(
-            f"Successfully deleted pet ID={response['id']}",
-            name="Cleanup info",
-            attachment_type=allure.attachment_type.TEXT,
-        )
+    petstore_client.delete(f"/pet/{pet_with_id['id']}")
 
 
 @pytest.fixture
@@ -67,21 +51,10 @@ def created_order(
         "status": "placed",
         "complete": False,
     }
-
-    with allure.step("SETUP: Create order for testing"):
-        response = petstore_client.create_order(order_data)
-        order_with_id = {**order_data, "id": response["id"]}
-        allure.attach(
-            f"Created order: ID={response['id']}, PetID={created_pet['id']}",
-            name="Test order info",
-            attachment_type=allure.attachment_type.TEXT,
-        )
-
+    response = petstore_client.post("/store/order", json=order_data)
+    assert (
+        response.status_code == 200
+    ), f"Failed to create order: {response.status_code}"
+    response_data = response.json()
+    order_with_id = {**order_data, "id": response_data["id"]}
     yield order_with_id
-
-    allure.attach(
-        f"Note: PetStore API doesn't provide DELETE for orders. "
-        f"Order ID={response['id']} remains in system.",
-        name="Cleanup note",
-        attachment_type=allure.attachment_type.TEXT,
-    )

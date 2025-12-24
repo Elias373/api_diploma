@@ -47,7 +47,6 @@ venv\Scripts\activate
 # 4. Install dependencies
 pip install -r requirements.txt
 ```
-### Configuration
 
 ### **Environment Variables**
 Create a `.env` file in the project root directory:
