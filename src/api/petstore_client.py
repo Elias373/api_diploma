@@ -1,4 +1,5 @@
 from typing import Any, Dict
+
 import requests
 
 from .base_client import BaseAPIClient

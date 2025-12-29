@@ -1,4 +1,5 @@
 import allure
+
 from src.schemas import Pet
 
 

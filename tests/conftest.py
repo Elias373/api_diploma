@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import Dict, Generator
+
 import pytest
+
 from src.api.petstore_client import PetStoreClient
 from src.config import APIConfig
 
@@ -31,7 +33,7 @@ def pet_data_template(unique_pet_name: str) -> Dict:
 
 @pytest.fixture
 def created_pet(
-    petstore_client: PetStoreClient, pet_data_template: Dict
+        petstore_client: PetStoreClient, pet_data_template: Dict
 ) -> Generator[Dict, None, None]:
     response = petstore_client.post("/pet", json=pet_data_template)
     assert response.status_code == 200
@@ -43,7 +45,7 @@ def created_pet(
 
 @pytest.fixture
 def created_order(
-    petstore_client: PetStoreClient, created_pet: Dict
+        petstore_client: PetStoreClient, created_pet: Dict
 ) -> Generator[Dict, None, None]:
     order_data = {
         "petId": created_pet["id"],
@@ -53,7 +55,7 @@ def created_order(
     }
     response = petstore_client.post("/store/order", json=order_data)
     assert (
-        response.status_code == 200
+            response.status_code == 200
     ), f"Failed to create order: {response.status_code}"
     response_data = response.json()
     order_with_id = {**order_data, "id": response_data["id"]}

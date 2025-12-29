@@ -1,6 +1,8 @@
 import json
+
 import allure
 import requests
+
 from src.config import APIConfig
 
 
@@ -32,12 +34,12 @@ class BaseAPIClient:
         return response
 
     def _log_to_allure(
-        self,
-        method: str,
-        endpoint: str,
-        url: str,
-        kwargs: dict,
-        response: requests.Response,
+            self,
+            method: str,
+            endpoint: str,
+            url: str,
+            kwargs: dict,
+            response: requests.Response,
     ) -> None:
         request_body = kwargs.get("json") or kwargs.get("data")
         allure.attach(

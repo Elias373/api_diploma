@@ -1,6 +1,7 @@
 import os
 from dataclasses import dataclass
 from typing import Optional
+
 from dotenv import load_dotenv
 
 
@@ -15,8 +16,6 @@ class APIConfig:
         base_url = os.getenv("BASE_URL", "https://petstore.swagger.io/v2")
         timeout = int(os.getenv("API_TIMEOUT", "30"))
 
-        if not base_url:
-            raise ValueError("BASE_URL cannot be empty")
         if not base_url.startswith(("http://", "https://")):
             raise ValueError(f"Invalid BASE_URL: {base_url}")
 
